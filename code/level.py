@@ -1,8 +1,8 @@
-import pygame
+# import pygame
 from settings import *
 from tile import Tile
 from player import Player
-from debug import debug
+# from debug import debug
 from support import *
 from random import choice, randint
 from weapon import Weapon
@@ -115,6 +115,7 @@ class Level:
             self.current_attack.kill()
         self.current_attack = None
 
+    # collision detection for player damaging the enemy
     def player_attack_logic(self):
         if self.attack_sprites:
             for attack_sprite in self.attack_sprites:
@@ -130,6 +131,7 @@ class Level:
                         else:
                             target_sprite.get_damage(self.player, attack_sprite.sprite_type)
 
+    # collision detection for enemy damaging the player
     def damage_player(self, amount, attack_type):
         if self.player.vulnerable:
             self.player.health -= amount
@@ -172,7 +174,7 @@ class YSortCameraGroup(pygame.sprite.Group):
         self.offset = pygame.math.Vector2()
 
         # creating the floor
-        self.floor_surf = pygame.image.load('../graphics/tilemap/ground.png').convert()
+        self.floor_surf = pygame.image.load('../graphics/tilemap/groud.png').convert()
         self.floor_rect = self.floor_surf.get_rect(topleft=(0, 0))
 
     def custom_draw(self, player):

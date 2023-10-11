@@ -60,6 +60,7 @@ class Enemy(Entity):
         for animation in self.animations.keys():
             self.animations[animation] = import_folder(main_path + animation)
 
+    # getting the distance and direction between player and enemy
     def get_player_distance_direction(self, player):
         enemy_vec = pygame.math.Vector2(self.rect.center)
         player_vec = pygame.math.Vector2(player.rect.center)
@@ -72,6 +73,7 @@ class Enemy(Entity):
 
         return (distance, direction)
 
+    # Sensor Range check algorithm and Basic Enemy Follow Algorithm
     def get_status(self, player):
         distance = self.get_player_distance_direction(player)[0]
 
@@ -84,6 +86,7 @@ class Enemy(Entity):
         else:
             self.status = 'idle'
 
+    # enemy is able to attack player
     def actions(self, player):
         if self.status == 'attack':
             self.attack_time = pygame.time.get_ticks()
@@ -122,6 +125,7 @@ class Enemy(Entity):
             if current_time - self.hit_time >= self.invincibility_duration:
                 self.vulnerable = True
 
+    # to reduce HP after getting hit by player
     def get_damage(self, player, attack_type):
         if self.vulnerable:
             self.hit_sound.play()
@@ -133,6 +137,7 @@ class Enemy(Entity):
             self.hit_time = pygame.time.get_ticks()
             self.vulnerable = False
 
+    # kill the enemy when their health is 0 or less
     def check_death(self):
         if self.health <= 0:
             self.kill()
